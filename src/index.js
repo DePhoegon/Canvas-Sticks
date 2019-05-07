@@ -131,7 +131,7 @@ function randomdude(dudes, Canvas) {
     if ((RanY-(RanR+10)<0)) {for (RanY; RanY-(RanR+5)<0; RanY=RanY+3){}}; 
     switch (RanC) {
       case 1:
-        tpose(Canvas, RanX, RanY, RanR, "#ddd");
+        tpose(Canvas, RanX, RanY, RanR, "#aaa");
       break;
       case 2:
        tpose(Canvas, RanX, RanY, RanC, "#333");
