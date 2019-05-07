@@ -1,0 +1,26 @@
+Variables for tpose to get return value 
+[Use Canvas variable w/ same input variables]
+1.  Ratio
+2.  Body Start X
+3.  Body Start Y
+4.  Body End X / Legs Start
+5.  Body End Y / Legs Start
+6.  Arms Start X
+7.  Arms Start Y
+8.  Right Elbow X
+9.  Right Elbow Y
+10. Left Elbow X
+11. Left Elbow Y
+12. Right Arm End X
+13. Right Arm End Y
+14. Left Arm End X
+15. Left Arm End Y
+16. Right Knee X
+17. Right Knee Y
+18. Left Knee X
+19. Left Knee Y
+20. Right Leg End X
+21. Right Leg End Y
+22. Left Leg End X
+23. Left Leg End Y
+------------------
