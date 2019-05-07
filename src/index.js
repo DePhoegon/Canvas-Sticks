@@ -7,11 +7,6 @@ function negator(mul, ratio, Endx, Startx, StartY) {
   return neg;
 } /* Returns, the difference between the ratio control and the difference of the X change */
 
-function limb(Canvas, UpperX1, UpperX2, LowerX2, UpperY1, UpperY2, LowerY2, UpperColor, LowerColor) {
-  line(Canvas, UpperX1, UpperX2, UpperY1, UpperY2, UpperColor); /* 'upper'  */
-  line(Canvas, UpperX2, LowerX2, UpperY2, LowerY2, LowerColor); /* 'lower' */
-} /* Multi-Stage Body maker */
-
 function tpose(canv, Hx, Hy, Hr, Hc) {
   var ratio = 1.75 * Hr;
   var bsx = Hx; /* Body Start X */
@@ -84,12 +79,14 @@ function tpose(canv, Hx, Hy, Hr, Hc) {
     case 23:
       return lly3;
     default:
+      GetPen(canv);
       cir(canv, Hx, Hy, Hr, Hc); /* Head */
       line(canv, bsx, bex, bsy, bey, Hc); /* Body */
       limb(canv, ax1, rax2, rax3, ay1, ray2, ray3, Hc, Hc); /* Right Arm */
       limb(canv, ax1, lax2, lax3, ay1, lay2, lay3, Hc, Hc); /* Left Arm */
       limb(canv, bex, rlx2, rlx3, bey, rly2, rly3, Hc, Hc); /* Right Leg */
       limb(canv, bex, llx2, llx3, bey, lly2, lly3, Hc, Hc); /* Left Leg */
+      Stroke(canv, Hc);
       break;
   }
 } /* Tpose for canvas stickman */
@@ -97,21 +94,33 @@ function tpose(canv, Hx, Hy, Hr, Hc) {
   Canvas
   Head X, Head Y, Head Radius, Color
   */
-
-function line(Canvas, StartX, EndX, StartY, EndY, Color) {
+function GetPen(Canvas) {
   Canvas.beginPath();
+} /* Opens Canvas for Path, Simple, allowing stacking of other 'functions' for custom shapes */
+function Stroke(Canvas, Color) {
   Canvas.strokeStyle = Color;
+  Canvas.stroke();
+} /* Use Stroke for Lines only, No fill */
+function fill(Canvas, Color, LColor) {
+  Canvas.strokeStyle = LColor;
+  Canvas.stroke();
+  Canvas.fillStyle = Color;
+  Canvas.fill(); 
+} /* Use fill to stroke the lines & fil the shape */
+function line(Canvas, StartX, EndX, StartY, EndY) {
   Canvas.moveTo(StartX, StartY);
   Canvas.lineTo(EndX, EndY);
-  Canvas.stroke();
 } /* Lines */
 function cir(Canvas, CenterX, CenterY, Radius, Color) {
-  Canvas.beginPath();
-  Canvas.strokeStyle = Color;
   Canvas.arc(CenterX, CenterY, Radius, 0, 2 * Math.PI);
-  Canvas.stroke();
 } /* Circles */
-
+function arcs(Canvas, CenterX, CenterY, Radius, Start, Size, counter, Color) {
+  Canvas.arc(CenterX, CenterY, Radius, Start*Math.PI, Size*Math.PI, counter);
+}
+function limb(Canvas, UpperX1, UpperX2, LowerX2, UpperY1, UpperY2, LowerY2) {
+  line(Canvas, UpperX1, UpperX2, UpperY1, UpperY2); /* 'upper'  */
+  line(Canvas, UpperX2, LowerX2, UpperY2, LowerY2); /* 'lower' */
+} /* Multi-Stage Body maker */
 var room = document.getElementById("bob");
 var floor = room.getContext("2d");
 /*
@@ -119,7 +128,6 @@ tpose(floor, 35, 25, 15, defC);
 tpose(floor, 150, 15, 10, "Yellow");
 var arms = tpose(15, 35, 25, 15);
 alert(arms); */
-randomdude(1, floor);
 function randomdude(dudes, Canvas) {
   var i;
   for (i=0; i<dudes; i++) {
@@ -163,4 +171,20 @@ function randomdude(dudes, Canvas) {
       default:
         tpose(Canvas, RanX, RanY, RanC, defC);
       break;
-  }}}
+  }
+}
+}
+
+GetPen(floor);
+arcs(floor, 185, 175, 30, 1.8, 2, false);
+arcs(floor, 265, 35, 30, .2, 1.5, true);
+arcs(floor, 265, 35, 30, 1.5, 1, true);
+arcs(floor, 185, 175, 30, 1.75, 1.8, false);
+fill(floor, "#05554f", "#450000")
+GetPen(floor);
+arcs(floor, 115, 175, 30, 1.2, 1, true);
+arcs(floor, 35, 35, 30, .8, 1.5, false);
+arcs(floor, 35, 35, 30, 1.5, 2, false);
+arcs(floor, 115, 175, 30, 1.25, 1.2, true);
+fill(floor, "#05554f", "#450000");
+randomdude(12, floor);
