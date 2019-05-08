@@ -111,7 +111,7 @@ function line(Canvas, StartX, EndX, StartY, EndY) {
   Canvas.moveTo(StartX, StartY);
   Canvas.lineTo(EndX, EndY);
 } /* Lines */
-function cir(Canvas, CenterX, CenterY, Radius, Color) {
+function cir(Canvas, CenterX, CenterY, Radius) {
   Canvas.arc(CenterX, CenterY, Radius, 0, 2 * Math.PI);
 } /* Circles */
 function arcs(Canvas, CenterX, CenterY, Radius, Start, Size, counter, Color) {
@@ -128,11 +128,11 @@ tpose(floor, 35, 25, 15, defC);
 tpose(floor, 150, 15, 10, "Yellow");
 var arms = tpose(15, 35, 25, 15);
 alert(arms); */
-function randomdude(dudes, Canvas) {
+function randomdude(dudes, Canvas, Room) {
   var i;
   for (i=0; i<dudes; i++) {
-    var RanX = Math.floor(Math.random()*260)+25;
-    var RanY = Math.floor(Math.random()*325)+1;
+    var RanX = Math.floor(Math.random()*Room.width-40)+25;
+    var RanY = Math.floor(Math.random()*(Room.height-25))+1;
     var RanR = Math.floor(Math.random()*15)+5;
     var RanC = Math.floor(Math.random()*10)+1;
     if (tpose(23, RanX, RanY, RanR)>400) {for (RanY; tpose(23, RanX, RanY, RanR)>400; RanY=RanY-15) {}};
@@ -174,17 +174,32 @@ function randomdude(dudes, Canvas) {
   }
 }
 }
-
-GetPen(floor);
-arcs(floor, 185, 175, 30, 1.8, 2, false);
-arcs(floor, 265, 35, 30, .2, 1.5, true);
-arcs(floor, 265, 35, 30, 1.5, 1, true);
-arcs(floor, 185, 175, 30, 1.75, 1.8, false);
-fill(floor, "#05554f", "#450000")
-GetPen(floor);
-arcs(floor, 115, 175, 30, 1.2, 1, true);
-arcs(floor, 35, 35, 30, .8, 1.5, false);
-arcs(floor, 35, 35, 30, 1.5, 2, false);
-arcs(floor, 115, 175, 30, 1.25, 1.2, true);
-fill(floor, "#05554f", "#450000");
-randomdude(12, floor);
+function bckrnd(Canvi, Room) {
+var Mrx=Room.width*.616;
+var Mlx=Room.width*.383;
+var Rx=Room.width*.883;
+var Lx=Room.width*.116;
+var Mty=Room.height*.438;
+var Ty=Room.height*.087;
+var Rad=Room.width*.08;
+var wvh=(Room.width < Room.height?Room.width*.35:Room.height*.35)
+GetPen(Canvi);
+cir(Canvi, Room.width*.5, Room.height*.5, wvh);
+fill(Canvi, "#05554f", "450000");
+arcs(Canvi, Mrx, Mty, Rad, 1.8, 2, false);
+arcs(Canvi, Rx, Ty, Rad, .2, 1.5, true);
+arcs(Canvi, Rx, Ty, Rad, 1.5, 1, true);
+arcs(Canvi, Mrx, Mty, Rad, 1.75, 1.8, false);
+fill(Canvi, "#05554f", "#05554f")
+GetPen(Canvi);
+arcs(Canvi, Mlx, Mty, Rad, 1.2, 1, true);
+arcs(Canvi, Lx, Ty, Rad, .8, 1.5, false);
+arcs(Canvi, Lx, Ty, Rad, 1.5, 2, false);
+arcs(Canvi, Mlx, Mty, Rad, 1.25, 1.2, true);
+fill(Canvi, "#05554f", "#05554f");
+GetPen(Canvi);
+cir(Canvi, Room.width*.5, Room.height*.5, wvh*.75);
+fill(Canvi, "rgba(40, 200, 165, .7)", "rgba(0,0,0,0)");
+}
+bckrnd(floor, room);
+randomdude(12, floor, room);
